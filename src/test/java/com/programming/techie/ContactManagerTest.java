@@ -1,15 +1,23 @@
 package com.programming.techie;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ContactManagerTest {
+
+    ContactManager contactManager;
+
+    @BeforeAll
+    public static void setupAll(){
+        System.out.println("Should print before all tests");
+    }
+    @BeforeEach
+    public void setup(){
+        contactManager = new ContactManager();
+    }
     @Test
     public void shouldCreateContact(){
-        ContactManager contactManager = new ContactManager();
         contactManager.addContact("John", "Smith", "0123456789");
         Assertions.assertFalse(contactManager.getAllContacts().isEmpty());
         Assertions.assertEquals(1, contactManager.getAllContacts().size());
@@ -23,7 +31,6 @@ class ContactManagerTest {
     @Test
     @DisplayName("Should not create contact when first name is Null")
     public void shouldThrowRuntimeExceptionWhenFirstNameIsNull(){
-        ContactManager contactManager = new ContactManager();
         Assertions.assertThrows(RuntimeException.class, () -> {
             contactManager.addContact(null, "Smith", "0123456789");
         });
@@ -32,7 +39,6 @@ class ContactManagerTest {
     @Test
     @DisplayName("Should not create contact when last name is Null")
     public void shouldThrowRuntimeExceptionWhenLastNameIsNull(){
-        ContactManager contactManager = new ContactManager();
         Assertions.assertThrows(RuntimeException.class, () -> {
            contactManager.addContact("John", null, "0123456789");
         });
@@ -41,7 +47,6 @@ class ContactManagerTest {
     @Test
     @DisplayName("Should not create contact when phone number is Null")
     public void shouldThrowRuntimeExceptionWhenPhoneNumberIsNull(){
-        ContactManager contactManager = new ContactManager();
         Assertions.assertThrows(RuntimeException.class, () -> {
             contactManager.addContact("John", "Smith", null);
         });
