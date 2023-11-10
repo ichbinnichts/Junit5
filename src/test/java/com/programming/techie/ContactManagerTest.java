@@ -1,6 +1,7 @@
 package com.programming.techie;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,6 +19,23 @@ class ContactManagerTest {
                         contact.getPhoneNumber().equals("0123456789"))
                 .findAny()
                 .isPresent());
+    }
+    @Test
+    @DisplayName("Should not create contact when first name is Null")
+    public void shouldThrowRuntimeExceptionWhenFirstNameIsNull(){
+        ContactManager contactManager = new ContactManager();
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            contactManager.addContact(null, "Smith", "0123456789");
+        });
+    }
+
+    @Test
+    @DisplayName("Should not create contact when last name is Null")
+    public void shouldThrowRuntimeExceptionWhenLastNameIsNull(){
+        ContactManager contactManager = new ContactManager();
+        Assertions.assertThrows(RuntimeException.class, () -> {
+           contactManager.addContact("John", null, "0123456789");
+        });
     }
 
 }
