@@ -12,6 +12,12 @@ class ContactManagerTest {
         contactManager.addContact("John", "Smith", "0123456789");
         Assertions.assertFalse(contactManager.getAllContacts().isEmpty());
         Assertions.assertEquals(1, contactManager.getAllContacts().size());
+        Assertions.assertTrue(contactManager.getAllContacts().stream()
+                .filter(contact -> contact.getFirstName().equals("John") &&
+                        contact.getLastName().equals("Smith") &&
+                        contact.getPhoneNumber().equals("0123456789"))
+                .findAny()
+                .isPresent());
     }
 
 }
