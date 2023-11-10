@@ -52,4 +52,14 @@ class ContactManagerTest {
         });
     }
 
+    @AfterEach
+    public void tearDown(){
+        System.out.println("Should execute after each test");
+    }
+
+    @AfterAll
+    public static void tearDownAll(){
+        System.out.println("Should execute after all tests");
+    }
+
 }
