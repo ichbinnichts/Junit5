@@ -1,6 +1,9 @@
 package com.programming.techie;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,6 +64,37 @@ class ContactManagerTest {
     @AfterAll
     public void tearDownAll(){
         System.out.println("Should execute after all tests");
+    }
+
+
+    @Test
+    @DisplayName("Should create contact only on MAC OS")
+    @EnabledOnOs(value = OS.MAC, disabledReason = "Enable only on MAC OS")
+    public void shouldCreateContactOnlyOnMac(){
+        contactManager.addContact("John", "Smith", "0123456789");
+        Assertions.assertFalse(contactManager.getAllContacts().isEmpty());
+        Assertions.assertEquals(1, contactManager.getAllContacts().size());
+        Assertions.assertTrue(contactManager.getAllContacts().stream()
+                .filter(contact -> contact.getFirstName().equals("John") &&
+                        contact.getLastName().equals("Smith") &&
+                        contact.getPhoneNumber().equals("0123456789"))
+                .findAny()
+                .isPresent());
+    }
+
+    @Test
+    @DisplayName("Should not create contact on Windows")
+    @DisabledOnOs(value = OS.WINDOWS, disabledReason = "Disable on windows")
+    public void shouldNotCreateContactOnWindows(){
+        contactManager.addContact("John", "Smith", "0123456789");
+        Assertions.assertFalse(contactManager.getAllContacts().isEmpty());
+        Assertions.assertEquals(1, contactManager.getAllContacts().size());
+        Assertions.assertTrue(contactManager.getAllContacts().stream()
+                .filter(contact -> contact.getFirstName().equals("John") &&
+                        contact.getLastName().equals("Smith") &&
+                        contact.getPhoneNumber().equals("0123456789"))
+                .findAny()
+                .isPresent());
     }
 
 }
